@@ -4,7 +4,15 @@ import { Button } from "@/components/ui/button";
 import { signIn } from "@/auth";
 import RepoPublisher from "@/components/RepoPublisher";
 import { getUserRepos } from "@/actions/getRepo";
-import { Lock, Shield, Zap, Github, GitBranch } from "lucide-react";
+import {
+  Lock,
+  Shield,
+  Zap,
+  Github,
+  GitBranch,
+  ExternalLink,
+  Star,
+} from "lucide-react";
 
 export default async function Home() {
   const session = await auth();
@@ -122,27 +130,52 @@ export default async function Home() {
         </div>
       </div>
 
-      {/* Tech Stack Highlight */}
-      <div className="py-24">
+      {/* GitHub Repository Section */}
+      <div className="py-24 bg-gradient-to-b from-background to-primary/5 border-t border-b border-border/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-2xl font-semibold mb-8 text-muted-foreground">
-            Built with Modern Technologies
-          </h2>
-          <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-            {[
-              "Next.js",
-              "React",
-              "TypeScript",
-              "Tailwind CSS",
-              "Drizzle ORM",
-            ].map((tech) => (
-              <div
-                key={tech}
-                className="px-4 py-2 border border-border rounded-lg bg-card/50"
+          <div className="flex flex-col items-center justify-center gap-4">
+            <div className="flex items-center justify-center mb-4">
+              <div className="h-px w-12 bg-primary/30"></div>
+              <GitBranch className="w-8 h-8 text-primary mx-4" />
+              <div className="h-px w-12 bg-primary/30"></div>
+            </div>
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+              Open Source Project
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8">
+              GitPeek is completely open source and free to use. We believe in
+              the power of community collaboration. Star the repository to show
+              your support and stay updated!
+            </p>
+
+            <div className="flex flex-wrap items-center justify-center gap-6 mt-4">
+              <a
+                href="https://github.com/Tony-ArtZ/git-peek"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-8 py-4 border border-border bg-card rounded-lg hover:bg-card/80 transition-colors"
               >
-                <span className="text-sm font-medium">{tech}</span>
-              </div>
-            ))}
+                <Github className="w-6 h-6" />
+                <span className="text-lg">View on GitHub</span>
+                <ExternalLink className="w-4 h-4 ml-1" />
+              </a>
+
+              <a
+                href="https://github.com/Tony-ArtZ/git-peek/stargazers"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-8 py-4 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors font-medium"
+              >
+                <Star className="w-6 h-6" />
+                <span className="text-lg">Star the Project</span>
+              </a>
+            </div>
+
+            {/* GitHub Stars Count - You could add actual count using GitHub API */}
+            <div className="flex items-center gap-2 mt-6 text-muted-foreground">
+              <Star className="w-5 h-5 fill-primary stroke-none" />
+              <span>Your star helps this project grow and improve!</span>
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { publishRepo } from "@/actions/publishRepo";
 import { Button } from "@/components/ui/button";
@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-export default function PublishPage() {
+function PublishPageContent() {
   const searchParams = useSearchParams();
   const repoId = searchParams.get("id");
 
@@ -169,5 +169,21 @@ export default function PublishPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+function PublishPageFallback() {
+  return (
+    <div className="min-h-screen bg-background flex items-center justify-center">
+      <Loader2 className="w-12 h-12 text-primary mx-auto animate-spin" />
+    </div>
+  );
+}
+
+export default function PublishPage() {
+  return (
+    <Suspense fallback={<PublishPageFallback />}>
+      <PublishPageContent />
+    </Suspense>
   );
 }

@@ -11,9 +11,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 interface RepoPageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{ id: string }>;
 }
 
 async function getRedirectData(id: string) {
