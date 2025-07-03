@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GitPeek
+
+**The easiest way to share any GitHub repository—public or private—without adding collaborators.**
+
+## Why GitPeek?
+
+Sharing a GitHub repository for interviews, assignments, or portfolio reviews is a pain if your repo is private. You either have to make it public (risking leaks) or add people as collaborators (tedious, slow, and not scalable). GitPeek solves this by letting you generate a secure, public link to any of your repositories—no matter the privacy setting. No more awkward access requests or waiting for invites to be accepted.
+
+**Perfect for:**
+
+- Job interviews and resume links
+- Assignment or project submissions
+- Showcasing private work to clients or reviewers
+- Sharing code with non-GitHub users
+
+## Key Features
+
+- 🔗 **Share Instantly**: Publish any repo (even private) with a single link—no need to add collaborators
+- 🔒 **Keep Control**: Your repo stays private on GitHub; only the shared link is public
+- 📁 **File Explorer**: Browse the repo structure in a beautiful, modern UI
+- 🔐 **Secure**: Uses your GitHub OAuth token, never exposes it to viewers
+- ⚡ **No Account Needed to View**: Anyone with the link can view, no sign-in required
+
+## Coming Soon
+
+- [ ] **Analytics**: See how many times your repo link was viewed
+- [ ] **Email Invites**: Send repo links directly to email addresses
+- [ ] **Access Controls**: Limit who can view your shared repo and revoke access
+- [ ] **More integrations**
+
+## Tech Stack
+
+- **Framework**: Next.js
+- **Authentication**: Auth.js (NextAuth) with GitHub
+- **Database**: Drizzle ORM + PostgreSQL
+- **UI**: shadcn/ui, Tailwind CSS, Lucide React
 
 ## Getting Started
 
-First, run the development server:
+1. **Clone & Install**
+   ```bash
+   git clone https://github.com/yourusername/gitpeek.git
+   cd gitpeek
+   npm install # or yarn/pnpm/bun
+   ```
+2. **Configure**: Copy `.env.example` to `.env.local` and fill in your GitHub OAuth and database credentials.
+3. **Database**: Run migrations with `npm run db:push` (or your package manager's equivalent).
+4. **Start**: `npm run dev` and open [http://localhost:3000](http://localhost:3000)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Usage
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Sign in** with GitHub
+2. **Publish** a repository from your dashboard
+3. **Share** the generated link—no GitHub account required to view
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## License
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+MIT — see [LICENSE.md](LICENSE.md)
 
-## Learn More
+## Contributing
 
-To learn more about Next.js, take a look at the following resources:
+PRs and suggestions are welcome!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Support
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Open an issue on GitHub for help or feature requests.
