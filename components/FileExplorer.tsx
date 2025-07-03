@@ -94,23 +94,25 @@ export default function FileExplorer({
   const pathSegments = currentPath.split("/").filter(Boolean);
 
   return (
-    <Card className="h-full">
+    <Card className="w-full h-full  ">
       <CardHeader className="pb-3">
         <CardTitle className="text-lg flex items-center gap-2">
           <Folder className="w-5 h-5" />
           Files
         </CardTitle>
         {/* Breadcrumb */}
-        {currentPath && (
-          <Breadcrumb
-            path={currentPath}
-            onNavigate={onDirectorySelect}
-            repoName={repoName}
-          />
-        )}
+        <div className="w-full overflow-hidden">
+          {currentPath && (
+            <Breadcrumb
+              path={currentPath}
+              onNavigate={onDirectorySelect}
+              repoName={repoName}
+            />
+          )}
+        </div>
       </CardHeader>
       <CardContent className="pt-0">
-        <div className="space-y-1">
+        <div className="space-y-1 max-h-[calc(100vh-250px)] overflow-auto">
           {/* Show parent directory option if not at root */}
           {currentPath && (
             <Button
@@ -162,8 +164,10 @@ export default function FileExplorer({
                         )}
                       </span>
                     )}
-                    {getFileIcon(file)}
-                    <span className="truncate">{file.name}</span>
+                    <span className="flex-shrink-0 mr-1">
+                      {getFileIcon(file)}
+                    </span>
+                    <span className="truncate max-w-[180px]">{file.name}</span>
                     {file.type === "file" && file.size && (
                       <span className="text-xs text-muted-foreground ml-auto flex-shrink-0">
                         {formatFileSize(file.size)}

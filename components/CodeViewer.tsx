@@ -69,7 +69,7 @@ export default function CodeViewer({ file, content }: CodeViewerProps) {
   const language = getLanguage(file.name);
 
   return (
-    <Card className="h-full flex flex-col">
+    <Card className="w-full flex flex-col">
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -139,7 +139,7 @@ export default function CodeViewer({ file, content }: CodeViewerProps) {
               </div>
             </div>
           ) : (
-            <div className="h-full overflow-auto">
+            <div className="h-full overflow-auto max-h-[calc(100vh-250px)]">
               <div className="bg-muted/50 rounded border">
                 <pre className="p-4 text-sm overflow-x-auto">
                   <code className={`language-${language}`}>

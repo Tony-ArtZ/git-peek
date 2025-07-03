@@ -43,7 +43,7 @@ export default async function RepoPage({ params }: RepoPageProps) {
 
   if (!repoData) {
     return (
-      <div className="min-h-screen bg-background">
+      <div className="bg-background">
         <Navbar session={session} />
         <div className="max-w-4xl mx-auto px-4 py-24">
           <div className="text-center">
@@ -70,7 +70,7 @@ export default async function RepoPage({ params }: RepoPageProps) {
   await incrementRepoView(id);
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="bg-background">
       <Navbar session={session} />
       <RepositoryViewer repoData={repoData} repoId={id} />
     </div>

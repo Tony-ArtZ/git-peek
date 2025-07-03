@@ -124,7 +124,7 @@ export default async function DashboardPage() {
   const session = await auth();
 
   return (
-    <main className="min-h-screen bg-background">
+    <main className="bg-background">
       <Navbar session={session} />
 
       {/* Background gradient similar to main page */}

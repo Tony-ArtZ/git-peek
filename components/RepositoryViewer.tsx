@@ -78,9 +78,9 @@ export default function RepositoryViewer({
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="w-full bg-background">
       <div className="max-w-7xl mx-auto px-4 py-6 space-y-6">
-        {/* Repository Header */}
+        {/* Header */}
         <RepoHeader repo={repoData.repo} />
 
         {/* Tab Navigation */}
@@ -123,7 +123,7 @@ export default function RepositoryViewer({
 
         {/* Content */}
         {activeTab === "files" ? (
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[calc(100vh-300px)]">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 min-h-[500px]">
             {/* File Explorer */}
             <div className="lg:col-span-1">
               <FileExplorer
