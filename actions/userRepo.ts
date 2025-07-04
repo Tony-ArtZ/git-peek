@@ -2,8 +2,8 @@
 
 import { auth } from "@/auth";
 import db from "@/db";
-import { redirects } from "@/db/schema";
-import { eq, and } from "drizzle-orm";
+import { redirects, viewCounts } from "@/db/schema";
+import { eq, and, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getUserRepos } from "@/actions/getRepo";
 
@@ -16,6 +16,8 @@ interface PublishedRepo {
   repoUrl?: string;
   description?: string;
   isPrivate?: boolean;
+  viewCount?: number;
+  lastViewed?: Date | null;
 }
 
 export async function getUserPublishedRepos(): Promise<PublishedRepo[]> {
@@ -25,14 +27,17 @@ export async function getUserPublishedRepos(): Promise<PublishedRepo[]> {
       throw new Error("User not authenticated");
     }
 
-    // Get published repos from database
+    // Get published repos from database with view counts
     const publishedRepos = await db
       .select({
         id: redirects.id,
         githubRepoId: redirects.githubRepoId,
         createdAt: redirects.createdAt,
+        viewCount: viewCounts.count,
+        lastViewed: viewCounts.lastViewed,
       })
       .from(redirects)
+      .leftJoin(viewCounts, eq(redirects.id, viewCounts.redirectId))
       .where(eq(redirects.userId, session.user.id))
       .orderBy(redirects.createdAt);
 
@@ -51,6 +56,8 @@ export async function getUserPublishedRepos(): Promise<PublishedRepo[]> {
         repoUrl: githubRepo?.html_url,
         description: githubRepo?.description || undefined,
         isPrivate: githubRepo?.private,
+        viewCount: repo.viewCount || 0,
+        lastViewed: repo.lastViewed,
       };
     });
 
@@ -106,5 +113,27 @@ export async function deletePublishedRepo(
       success: false,
       message: "Failed to delete repository",
     };
+  }
+}
+
+export async function getUserTotalViews(): Promise<number> {
+  try {
+    const session = await auth();
+    if (!session?.user?.id) {
+      return 0;
+    }
+
+    const result = await db
+      .select({
+        totalViews: sql<number>`COALESCE(SUM(${viewCounts.count}), 0)`,
+      })
+      .from(redirects)
+      .leftJoin(viewCounts, eq(redirects.id, viewCounts.redirectId))
+      .where(eq(redirects.userId, session.user.id));
+
+    return result[0]?.totalViews || 0;
+  } catch (error) {
+    console.error("Error fetching total views:", error);
+    return 0;
   }
 }

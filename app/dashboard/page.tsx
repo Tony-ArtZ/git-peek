@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { auth } from "@/auth";
-import { getUserPublishedRepos } from "@/actions/userRepo";
+import { getUserPublishedRepos, getUserTotalViews } from "@/actions/userRepo";
 import Navbar from "@/components/Navbar";
 import PublishedReposList from "./components/PublishedReposList";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -14,7 +14,19 @@ async function DashboardContent() {
     redirect("/");
   }
 
-  const publishedRepos = await getUserPublishedRepos();
+  const [publishedRepos, totalViews] = await Promise.all([
+    getUserPublishedRepos(),
+    getUserTotalViews(),
+  ]);
+
+  const formatNumber = (num: number) => {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + "M";
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(1) + "K";
+    }
+    return num.toString();
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -70,8 +82,12 @@ async function DashboardContent() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">-</div>
-            <p className="text-xs text-muted-foreground">Coming Soon</p>
+            <div className="text-2xl font-bold">{formatNumber(totalViews)}</div>
+            {totalViews >= 1000 && (
+              <p className="text-xs text-muted-foreground">
+                {totalViews.toLocaleString()} total
+              </p>
+            )}
           </CardContent>
         </Card>
       </div>

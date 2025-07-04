@@ -3,6 +3,7 @@
 import db from "@/db";
 import { redirects } from "@/db/schema";
 import { eq } from "drizzle-orm";
+import { updateViewCount } from "./updateView";
 
 export async function incrementRepoView(repoId: string): Promise<boolean> {
   try {
@@ -17,9 +18,8 @@ export async function incrementRepoView(repoId: string): Promise<boolean> {
       return false;
     }
 
-    // In a real implementation, you might want to add a views table
-    // For now, we'll just track that the view happened
-    console.log(`Repository ${repoId} viewed at ${new Date().toISOString()}`);
+    // Update the view count
+    await updateViewCount(repoId);
 
     return true;
   } catch (error) {

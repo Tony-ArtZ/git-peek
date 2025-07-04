@@ -55,6 +55,14 @@ export const redirects = pgTable("redirect", {
   createdAt: timestamp("createdAt", { mode: "date" }).defaultNow(),
 });
 
+export const viewCounts = pgTable("viewCount", {
+  redirectId: text("id")
+    .primaryKey()
+    .references(() => redirects.id, { onDelete: "cascade" }),
+  count: integer("count").default(0),
+  lastViewed: timestamp("lastViewed", { mode: "date" }).defaultNow(),
+});
+
 export const sessions = pgTable("session", {
   sessionToken: text("sessionToken").primaryKey(),
   userId: text("userId")

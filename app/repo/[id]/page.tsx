@@ -66,8 +66,10 @@ export default async function RepoPage({ params }: RepoPageProps) {
     );
   }
 
-  // Track the view
-  await incrementRepoView(id);
+  // Track the view (non-blocking)
+  incrementRepoView(id).catch((error) =>
+    console.error("Failed to track view:", error)
+  );
 
   return (
     <div className="bg-background">

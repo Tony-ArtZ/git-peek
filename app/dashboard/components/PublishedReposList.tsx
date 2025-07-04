@@ -16,6 +16,7 @@ import {
   CheckCircle,
   AlertCircle,
   Loader2,
+  Eye,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -27,6 +28,8 @@ interface PublishedRepo {
   repoUrl?: string;
   description?: string;
   isPrivate?: boolean;
+  viewCount?: number;
+  lastViewed?: Date | null;
 }
 
 interface PublishedReposListProps {
@@ -63,6 +66,15 @@ function RepoCard({
     } finally {
       setIsDeleting(false);
     }
+  };
+
+  const formatNumber = (num: number) => {
+    if (num >= 1000000) {
+      return (num / 1000000).toFixed(1) + "M";
+    } else if (num >= 1000) {
+      return (num / 1000).toFixed(1) + "K";
+    }
+    return num.toString();
   };
 
   const formatDate = (date: Date | null) => {
@@ -111,6 +123,26 @@ function RepoCard({
             <Calendar className="w-4 h-4" />
             <span>Published {formatDate(repo.createdAt)}</span>
           </div>
+
+          {repo.viewCount !== undefined && (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <Eye className="w-4 h-4" />
+              <span>
+                {formatNumber(repo.viewCount)}{" "}
+                {repo.viewCount === 1 ? "view" : "views"}
+                {repo.viewCount >= 1000 && (
+                  <span className="text-xs ml-1">
+                    ({repo.viewCount.toLocaleString()})
+                  </span>
+                )}
+                {repo.lastViewed && (
+                  <span className="ml-2">
+                    • Last viewed {formatDate(repo.lastViewed)}
+                  </span>
+                )}
+              </span>
+            </div>
+          )}
 
           <div className="text-sm">
             <span className="font-medium">Share URL:</span>
