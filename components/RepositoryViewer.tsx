@@ -186,6 +186,7 @@ export default function RepositoryViewer({
               content={repoData.readme!}
               repoUrl={repoData.repo.html_url}
               branch={repoData.repo.default_branch}
+              repoId={repoId}
             />
           </div>
         ) : (
